@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.start_page.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.start_page.entrypoints=web"
+      - "traefik.docker.network=proxy"
+    volumes:
+      - .:/app
+    expose:
+      - 8121
+    networks:
+      proxy:
+        ipv4_address: 10.200.2.1
+
+networks:
+  proxy:
+    external: true
