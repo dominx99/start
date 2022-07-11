@@ -10,8 +10,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.start_page.rule=Host(`${DOMAIN}`)"
-      - "traefik.http.routers.start_page.entrypoints=web"
+      - "traefik.http.routers.start_page.entrypoints=websecure"
       - "traefik.docker.network=proxy"
+      - "traefik.http.routers.start_page.tls.certresolver=lets_encrypt_resolver"
     volumes:
       - .:/app
     expose:
